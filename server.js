@@ -7,5 +7,5 @@ app.get('/',function (req, res){
 });
 
 app.listen(PORT, function(){
-    console.log('Express listening..!!');
+    console.log('Express is listening..!!');
 })
