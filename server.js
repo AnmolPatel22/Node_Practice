@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var _ = require('underscore');
 var db = require('./db.js');
+const { todo } = require('./db.js');
 
 var app = express();
 var PORT = process.env.PORT || 3000;
@@ -36,13 +37,24 @@ app.get('/todos',function(req, res){
 //GET /todos/:id
 app.get('/todos/:id',function(req, res){
     var todoId = parseInt(req.params.id,10);
-    var matchedTodo  = _.findWhere(todos, {id: todoId});
 
-     if(matchedTodo){
-        res.json(matchedTodo);
-     }else{
-        res.status(404).send();
-     }
+    db.todo.findById(todoId).then(function(todo){
+        if(!!todo){
+            res.json(todo.toJSON());
+        }else{
+            res.status(400).send();
+        }
+    }, function(e){
+        res.status(500).send();
+    });
+
+    // var matchedTodo  = _.findWhere(todos, {id: todoId});
+
+    //  if(matchedTodo){
+    //     res.json(matchedTodo);
+    //  }else{
+    //     res.status(404).send();
+    //  }
 });
 
 //POST
