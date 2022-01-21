@@ -64,7 +64,8 @@ module.exports = function(sequelize,DataTypes){
                         reject();
                     });
                 });
-            }
+            },
+            findByToken:{}
         },
         instanceMethods: {
             toPublicJSON: function(){
